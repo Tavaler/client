@@ -20,7 +20,7 @@ const Header = (props : any) => {
             aria-label="menu"
             sx={{ mr: 2 }}
           >
-           <Switch defaultChecked onChange={props.handleMode} />
+           <Switch defaultChecked color='default'  onChange={props.handleMode} />
           </IconButton>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             SilverPony

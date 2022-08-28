@@ -12,6 +12,7 @@ const Catalog = () => {
 
 
   useEffect(() => {
+    console.log("5555555")
     fetch("http://localhost:5000/api/Products")
     .then((response)=>response.json())
     .then((data)=>setProducts(data))

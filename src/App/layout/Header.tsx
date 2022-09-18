@@ -6,6 +6,7 @@ import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import {
   Badge,
+  IconButton,
   List,
   ListItem,
   ListItemButton,
@@ -13,7 +14,9 @@ import {
   Switch,
 } from "@mui/material";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
+import { useStoreContext } from "../context/StoreContext";
+import { ShoppingCart } from "@mui/icons-material";
 
 const midLinks = [
   { title: "catalog", path: "/catalog" },
@@ -38,6 +41,8 @@ const navStyles = {
 };
 
 const Header = (props: any) => {
+  const { basket } = useStoreContext();
+  const itemCount = basket?.items.reduce((sum, item) => sum + item.quantity, 0);
   return (
     <Box sx={{ flexGrow: 1, mb: 5 }}>
       <AppBar position="static">
@@ -68,11 +73,17 @@ const Header = (props: any) => {
           </List>
 
           <Box sx={{ display: "flex", alignItems: "center" }}>
-            <Button size="large" color="inherit">
-              <Badge color="secondary" badgeContent={44}>
-                <ShoppingCartIcon />
+            <IconButton
+              component={Link}
+              to="/basket"
+              aria-label="cart"
+              sx={{ color: "inherit" }}
+              size="large"
+            >
+              <Badge badgeContent={itemCount} color="warning">
+                <ShoppingCart />
               </Badge>
-            </Button>
+            </IconButton>
             <List sx={{ display: "flex" }}>
               {rightLinks.map(({ title, path }) => (
                 <ListItem

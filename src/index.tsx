@@ -1,20 +1,23 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App/layout/App';
-import reportWebVitals from './reportWebVitals';
+import React from "react";
+import ReactDOM from "react-dom/client";
+import "./index.css";
+import App from "./App/layout/App";
+import reportWebVitals from "./reportWebVitals";
 import { unstable_HistoryRouter as HistoryRouter } from "react-router-dom";
 import { createBrowserHistory } from "history";
+import { StoreProvider } from "./App/context/StoreContext";
 
-export const history = createBrowserHistory({ window }); 
+export const history = createBrowserHistory({ window });
 
 const root = ReactDOM.createRoot(
-  document.getElementById('root') as HTMLElement
+  document.getElementById("root") as HTMLElement
 );
 root.render(
   // ลบ React.StrictMode ออกไป กันเบิ้ล
   <HistoryRouter history={history}>
-        <App />
+    <StoreProvider>
+      <App />
+    </StoreProvider>
   </HistoryRouter>
 );
 

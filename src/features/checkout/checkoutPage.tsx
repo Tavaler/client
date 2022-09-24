@@ -1,9 +1,11 @@
 import React from 'react'
 
-const CheckoutPage = () => {
+export default function CheckoutPage() {
   return (
-    <div>CheckoutPage</div>
+    <div>
+        CheckoutPage
+    </div>
   )
 }
 
-export default CheckoutPage
+

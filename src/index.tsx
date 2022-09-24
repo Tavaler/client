@@ -5,9 +5,19 @@ import App from "./App/layout/App";
 import reportWebVitals from "./reportWebVitals";
 import { unstable_HistoryRouter as HistoryRouter } from "react-router-dom";
 import { createBrowserHistory } from "history";
-import { StoreProvider } from "./App/context/StoreContext";
+import { store } from "./App/store/configureStore";
+import { Provider } from "react-redux";
+
+import "slick-carousel/slick/slick.css";
+
+import "slick-carousel/slick/slick-theme.css";
+import { fetchProductsAsync } from "./features/catalog/catalogSlice";
 
 export const history = createBrowserHistory({ window });
+
+console.log(store.getState())
+store.dispatch(fetchProductsAsync())
+
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
@@ -15,9 +25,9 @@ const root = ReactDOM.createRoot(
 root.render(
   // ลบ React.StrictMode ออกไป กันเบิ้ล
   <HistoryRouter history={history}>
-    <StoreProvider>
-      <App />
-    </StoreProvider>
+    <Provider store={store}>
+        <App />
+    </Provider>
   </HistoryRouter>
 );
 

@@ -16,22 +16,16 @@ import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { Link } from "react-router-dom";
 import { LoadingButton } from "@mui/lab";
 import agent from "../../App/api/agent";
-import { useStoreContext } from "../../App/context/StoreContext";
+import { useAppDispatch, useAppSelector } from "../../App/store/configureStore";
+import { addBasketItemAsync, setBasket } from "../basket/basketSlice";
 interface Props {
   product: Product;
 }
 
 const ProductCrad = ({ product }: Props) => {
-  const [loading, setLoading] = useState(false);
-  const { setBasket } = useStoreContext();
-
-  function handleAddItem(productId:number) {
-    setLoading(true);
-    agent.Basket.addItem(productId)
-    .then((basket)=>setBasket(basket))
-    .catch((error)=>console.log(error))
-    .finally(()=>setLoading(false));
-  }
+  const { status } = useAppSelector((state) => state.basket);
+  const dispatch = useAppDispatch();
+  
   return (
     <>
       <Card sx={{ maxWidth: "100%" }}>
@@ -68,8 +62,8 @@ const ProductCrad = ({ product }: Props) => {
         </CardContent>
         <CardActions>
           <LoadingButton
-            loading={loading}
-            onClick={() => handleAddItem(product.id)}
+            loading={status ==="pendingAddItem" + product.id}
+            onClick={() =>dispatch(addBasketItemAsync({ productId: product.id }))}
             size="small"
           >
             Add To Cart

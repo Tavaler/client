@@ -1,32 +1,25 @@
-
-import axios from "axios";
-import React,{useEffect,useState} from "react";
+import React, { useEffect, useState } from "react";
 import agent from "../../App/api/agent";
 import LoadingComponent from "../../App/layout/LoadingComponent";
 import { Product } from "../../App/model/Product";
+import { useAppSelector, useAppDispatch } from "../../App/store/configureStore";
+import { productSelectors, fetchProductsAsync } from "./catalogSlice";
 import ProductList from "./ProductList";
 
-
-
-
 const Catalog = () => {
-  const [products, setProducts] = useState<Product[]>([])
-  const [loading, setLoading] = useState(true);
-
-
+  const products = useAppSelector(productSelectors.selectAll);
+  const { productsLoaded, status } = useAppSelector((state) => state.catalog);
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
-    console.log("5555555")
-    agent.Catalog.list()
-    .then((response : any)=>{setProducts(response)})
-    .catch((error)=>console.log(error))
-    .finally(()=>setLoading(false));
-  }, [])
+    if (!productsLoaded) dispatch(fetchProductsAsync());
+  }, [productsLoaded,dispatch]);
 
-  if (loading) return <LoadingComponent message="Loading Products....." />;
+  if (status.includes("pending")) return <LoadingComponent message="Loading Products..." />;
+
   return (
     <>
-    <ProductList products={products}/>
+      <ProductList products={products} />
     </>
   );
 };

@@ -15,7 +15,7 @@ import { Grid, Button } from "@mui/material";
 import BasketSummary from "./BasketSummary";
 import { Link } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../App/store/configureStore";
-import { addBasketItemAsync, removeBasketItemAsync, removeItem, setBasket } from "./basketSlice";
+import { addBasketItemAsync, removeBasketItemAsync,} from "./basketSlice";
 
 export default function BasketPage() {
   const { basket, status } = useAppSelector((state) => state.basket);

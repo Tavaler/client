@@ -22,6 +22,7 @@ import Register from "../../features/account/Register";
 import Login from "../../features/account/Login";
 import { fetchCurrentUser } from "../../features/account/accountSlice";
 import { PrivateLogin, PrivateRoute } from "./PrivateRoute";
+import OrderPage from "../../features/orders/OrderPage";
 
 export default function ButtonAppBar() {
   // const { setBasket } = useStoreContext(); //ควบคุมสเตทด้วย React context to Centralize
@@ -97,6 +98,7 @@ const mainroute = (
       }
     />
     <Route element={<PrivateRoute />}>
+    <Route path="/order" element={<OrderPage/>}/>
       <Route path="/checkout" element={<CheckoutPage />} />
     </Route>
   </Routes>

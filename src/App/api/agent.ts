@@ -5,7 +5,7 @@ import { history } from "../..";
 import { PaginatedResponse } from "../model/pagination";
 import { store } from "../store/configureStore";
 
-axios.defaults.baseURL = "http://localhost:5000/api/";
+axios.defaults.baseURL = process.env.REACT_APP_API_URL
 axios.defaults.withCredentials = true; //อนุญําตให้เข้ําถึงคุกกี้ที่ browser ได้
 
 const ResponseBody = (response: AxiosResponse) => response.data;
@@ -21,8 +21,7 @@ const sleep = () => new Promise((_) => setTimeout(_, 500));
 
 axios.interceptors.response.use(
   async (response) => {
-    await sleep();
-
+    if(process.env.NODE_ENV === 'development') await sleep()
     const pagination = response.headers["pagination"]; //ส่งมําจําก ProductController
     if (pagination) {
       response.data = new PaginatedResponse(
